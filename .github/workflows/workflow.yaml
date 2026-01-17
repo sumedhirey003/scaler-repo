@@ -21,14 +21,16 @@ jobs:
                           with:
                                   name: sample-text
                                   path: sample.txt
-         use_artifact:
-                 needs: create_artifact
-                 runs_on: ubuntu-latest
+        use_artifact:
 
-                 steps:
-                         - name: Download artifact
-                           uses: actions/download-artifact@v4
-                           with:
-                                   name: sample-text
-                         - name: Display artifact content
-                           run: cat sample.txt
+                needs: create_artifact
+                runs-on: ubuntu-latest
+
+                steps:
+
+                        - name: Download artifact
+                          uses: actions/download-artifact@v4
+                          with:
+                                  name: sample-text
+                        - name: Display artifact content
+                          run: cat sample.txt
