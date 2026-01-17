@@ -1,3 +1,4 @@
+cat workflow.yaml
 name: Artifact Passing workflow
 
 on:
