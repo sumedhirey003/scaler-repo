@@ -1,0 +1,36 @@
+name: PostgreSQL Service Test
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test-postgres:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpassword
+          POSTGRES_DB: testdb
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          echo "Waiting for PostgreSQL..."
+          while ! nc -z localhost 5432; do
+            sleep 1
+          done
+          echo "PostgreSQL is up!"
+
+      - name: Confirm PostgreSQL is running
+        run: echo "PostgreSQL service is ready and reachable!"
